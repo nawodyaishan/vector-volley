@@ -1,0 +1,15 @@
+# Editor and OS cruft
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# Local dependencies and build artifacts
+node_modules/
+dist/
+build/
+
+# Logs and temporary test artifacts
+*.log
+*.tmp
