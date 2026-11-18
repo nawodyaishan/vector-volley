@@ -60,3 +60,7 @@ make clean      # remove local artifacts
 
 Full requirements live in [`docs/vector-volley.md`](docs/vector-volley.md) and
 [`docs/vector-volley-amendment.md`](docs/vector-volley-amendment.md).
+
+## Credits
+
+This project was created entirely using the `hy4-flash-free` model in OpenCode.
