@@ -35,6 +35,17 @@ make serve      # http://localhost:8000
 No build step, dependencies, or network access are required. `game.js` is loaded
 as a classic deferred script so `file://` launches work.
 
+## GitHub Pages
+
+Live game: <https://nawodyaishan.github.io/vector-volley/>
+
+The repository includes a Pages workflow that stages the three game files into
+`site/` and deploys them on every push to `main`. Set **Settings → Pages →
+Source: GitHub Actions** once; later pushes deploy automatically. The published
+site is byte-for-byte the same three files used for a local launch.
+
+Run `make site` to produce the same staging folder locally.
+
 ## Files
 
 | File | Responsibility |
