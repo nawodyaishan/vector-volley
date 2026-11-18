@@ -1,0 +1,198 @@
+/* Vector Volley — responsive, high-contrast dark theme */
+:root {
+  --bg: #05080d;
+  --panel: #0b121b;
+  --ink: #eaf2fb;
+  --muted: #9aacc0;
+  --near: #22d3ee; /* cyan */
+  --far: #fbbf24;  /* amber */
+  --line: #1d2a38;
+  --line-bright: #33445a;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { height: 100%; }
+
+body {
+  margin: 0;
+  height: 100vh;
+  height: 100dvh;
+  padding: 0.75rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.55rem;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 120%, #0d1a2a 0%, var(--bg) 70%);
+  color: var(--ink);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- Scoreboard ---- */
+.scoreboard {
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 62rem;
+  margin: 0 auto;
+  padding: 0.55rem 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem 2rem;
+  background: linear-gradient(180deg, rgba(20, 30, 43, 0.95), var(--panel));
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+.player {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.player--near { color: var(--near); }
+.player--far  { color: var(--far); }
+
+.player__label {
+  color: var(--muted);
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.score {
+  display: inline-block;
+  min-width: 2ch;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* CSS-built paddle identification stripes (one near, two far) */
+.stripes {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  height: 1.5em;
+}
+
+.stripes i {
+  display: block;
+  width: 3px;
+  height: 100%;
+  border-radius: 2px;
+  background: currentColor;
+  box-shadow: 0 0 6px currentColor;
+}
+
+/* Goal highlight — toggled by game.js */
+@keyframes score-pulse {
+  0%   { transform: scale(1);    filter: brightness(1); }
+  35%  { transform: scale(1.25); filter: brightness(1.6); }
+  100% { transform: scale(1);    filter: brightness(1); }
+}
+
+.score--pulse { animation: score-pulse 500ms ease-out; }
+
+/* ---- Restart button ---- */
+#restart {
+  font: inherit;
+  font-size: 0.85rem;
+  color: var(--ink);
+  background: #16202d;
+  border: 1px solid var(--line-bright);
+  border-radius: 6px;
+  padding: 0.45rem 0.9rem;
+  cursor: pointer;
+  transition: background-color 150ms ease, border-color 150ms ease, transform 100ms ease;
+}
+
+#restart:hover { background: #1d2a3a; border-color: var(--near); }
+#restart:active { transform: translateY(1px); }
+
+#restart:focus-visible {
+  outline: 3px solid var(--near);
+  outline-offset: 3px;
+}
+
+/* ---- Status + legend ---- */
+.status {
+  flex-shrink: 0;
+  margin: 0;
+  min-height: 1.3em;
+  color: var(--ink);
+  font-size: clamp(0.9rem, 2.2vw, 1.05rem);
+  text-align: center;
+}
+
+.legend {
+  flex-shrink: 0;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.4;
+  text-align: center;
+}
+
+/* ---- Court ---- */
+#court {
+  display: block;
+  flex: 1 1 0;
+  min-height: 0;
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  touch-action: none;
+}
+
+#court:focus-visible {
+  outline: 2px solid var(--near);
+  outline-offset: -2px;
+}
+
+/* ---- Tight (including square) windows: scores stay side-by-side,
+        Restart wraps onto its own row below them ---- */
+@media (max-width: 40rem) {
+  .scoreboard {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "near far"
+      "restart restart";
+    row-gap: 0.55rem;
+    column-gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .player--near { grid-area: near;  justify-content: center; }
+  .player--far  { grid-area: far;   justify-content: center; }
+  #restart      { grid-area: restart; justify-self: center; }
+
+  .player__label {
+    font-size: 0.72rem;
+    white-space: normal;
+  }
+}
+
+/* ---- Reduced motion: no score pulse or transitions ---- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .score--pulse { animation: none !important; }
+}

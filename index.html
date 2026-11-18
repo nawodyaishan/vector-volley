@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vector Volley</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="scoreboard" class="scoreboard">
+  <div class="player player--near">
+    <span class="player__label">P1 · Near · A/D</span>
+    <span class="stripes" aria-hidden="true"><i></i></span>
+    <span id="score-near" class="score">0</span>
+  </div>
+  <button id="restart" type="button">Restart</button>
+  <div class="player player--far">
+    <span id="score-far" class="score">0</span>
+    <span class="stripes stripes--double" aria-hidden="true"><i></i><i></i></span>
+    <span class="player__label">P2 · Far · ←/→</span>
+  </div>
+</div>
+<p id="status" class="status" role="status" aria-live="polite">New match. Space to serve.</p>
+<p class="legend">First to 5 · Space: serve / resume / replay · R: restart · A/D and ←/→: move</p>
+<canvas id="court" tabindex="0" aria-label="Vector Volley court"></canvas>
+<script src="game.js" defer></script>
+</body>
+</html>
