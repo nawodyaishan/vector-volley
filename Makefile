@@ -1,6 +1,7 @@
 # Vector Volley — developer tasks (no npm dependencies)
 
 GAME_FILES := index.html style.css game.js
+SITE_ASSETS := preview.png
 SITE_DIR := site
 PORT ?= 8000
 
@@ -29,9 +30,9 @@ test: ## Run the dependency-free black-box test suite
 
 verify: check size test ## Run syntax, size budget, and tests
 
-site: ## Stage the three game files into site/ for static hosting
+site: ## Stage the game files and preview image into site/ for static hosting
 	mkdir -p $(SITE_DIR)
-	cp $(GAME_FILES) $(SITE_DIR)/
+	cp $(GAME_FILES) $(SITE_ASSETS) $(SITE_DIR)/
 
 clean: ## Remove local artifacts
 	rm -rf $(SITE_DIR) tests/.chrome-user-data *.log *.tmp

@@ -132,6 +132,9 @@ function runStaticChecks() {
   }
 
   // No external URLs / CDNs / fonts / network references in any deliverable.
+  // Canonical and link-preview tags contain one self-referential Pages URL;
+  // crawlers read it, the browser never fetches it, so allow exactly that URL.
+  const PREVIEW_URL = 'https://nawodyaishan.github.io/vector-volley/';
   const externalPatterns = [
     { re: /\bhttps?:\/\//i, label: 'http(s)://' },
     { re: /\bwss?:\/\//i, label: 'ws(s)://' },
@@ -142,13 +145,34 @@ function runStaticChecks() {
   ];
   for (const file of GAME_FILES) {
     if (texts[file] === undefined) continue;
+    const scan = file === 'index.html' ? texts[file].split(PREVIEW_URL).join('') : texts[file];
     const hits = [];
     for (const { re, label } of externalPatterns) {
-      const match = texts[file].match(re);
+      const match = scan.match(re);
       if (match) hits.push(`${label} (${match[0]})`);
     }
     check(`no external URLs in ${file}`, hits.length === 0, hits.join('; '));
   }
+
+  // Link-preview metadata (WhatsApp, Telegram, Slack, social crawlers).
+  const previewHtml = texts['index.html'] || '';
+  const previewTags = [
+    'og:type', 'og:title', 'og:description', 'og:url', 'og:image',
+    'og:image:type', 'og:image:width', 'og:image:height', 'og:image:alt',
+    'twitter:card', 'twitter:title', 'twitter:description', 'twitter:image',
+  ];
+  for (const key of previewTags) {
+    const attr = key.startsWith('twitter:') ? 'name' : 'property';
+    const re = new RegExp(`<meta[^>]+${attr}=["']${key}["'][^>]+content=["'][^"']+["']`, 'i');
+    check(`preview meta ${key} present`, re.test(previewHtml));
+  }
+  check('preview meta og:image points at preview.png',
+    /content=["']https:\/\/nawodyaishan\.github\.io\/vector-volley\/preview\.png["']/i.test(previewHtml));
+  check('canonical link points at Pages URL',
+    /<link[^>]+rel=["']canonical["'][^>]+href=["']https:\/\/nawodyaishan\.github\.io\/vector-volley\/["']/i.test(previewHtml));
+  check('preview image exists and is 1200x630 PNG',
+    existsSync(path.join(ROOT, 'preview.png')) &&
+      readFileSync(path.join(ROOT, 'preview.png')).subarray(1, 4).toString() === 'PNG');
 }
 
 // ---------------------------------------------------------------------------

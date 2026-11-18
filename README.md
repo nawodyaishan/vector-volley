@@ -44,7 +44,9 @@ The repository includes a Pages workflow that stages the three game files into
 Source: GitHub Actions** once; later pushes deploy automatically. The published
 site is byte-for-byte the same three files used for a local launch.
 
-Run `make site` to produce the same staging folder locally.
+Run `make site` to produce the same staging folder locally. The page carries
+Open Graph and Twitter card metadata plus a 1200 × 630 `preview.png`, so shared
+links render a rich preview in WhatsApp, Telegram, and social apps.
 
 ## Files
 
