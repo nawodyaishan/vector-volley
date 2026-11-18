@@ -38,3 +38,8 @@ Route both restart inputs through one reset function. Reset scores, winner, serv
 2. **Scoreboard.** Score from both ends. Verify the correct digit changes once per miss, the fifth point ends the match, and resizing keeps the score and both paddles visible.
 3. **Restart.** At 3–2, restart once by button and once by R in separate matches. Each time verify 0–0, centered objects, a stationary ball, and exactly one serve on Space. Repeat from pause and match over. Confirm Space replay also works after a win.
 4. **Budget and input.** Open index.html offline and check the three-file size. On the development laptop, target 60 fps at 1280 × 720 during a 30-second rally. Check simultaneous A/D and arrow-key movement, then enable reduced motion and verify that scoring and restart still work.
+
+## 5. Tuning
+
+Ball speed is 9 units per second, up from 8 in the base spec. Paddle speed and
+all other match rules are unchanged.

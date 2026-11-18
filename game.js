@@ -22,7 +22,7 @@
   const PADDLE_SPEED = 9;              // units / second
   const MAX_PADDLE_X = HALF_W - PADDLE_W / 2; // 4.5 (clamped inside walls)
 
-  const BALL_SPEED = 8;                // units / second, kept constant
+  const BALL_SPEED = 9;                // units / second, kept constant
   const BALL_RADIUS = 0.3;
   const BALL_Y = BALL_RADIUS;          // octahedron sits on the floor
 
