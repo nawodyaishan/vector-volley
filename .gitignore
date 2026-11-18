@@ -13,3 +13,6 @@ build/
 # Logs and temporary test artifacts
 *.log
 *.tmp
+
+# Generated static site (staged by `make site` for Pages)
+site/

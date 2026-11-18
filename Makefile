@@ -1,11 +1,12 @@
 # Vector Volley — developer tasks (no npm dependencies)
 
 GAME_FILES := index.html style.css game.js
+SITE_DIR := site
 PORT ?= 8000
 
 .DEFAULT_GOAL := help
 
-.PHONY: help serve check size test verify clean
+.PHONY: help serve check size test verify site clean
 
 help: ## List available targets
 	@grep -E '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) | \
@@ -28,5 +29,9 @@ test: ## Run the dependency-free black-box test suite
 
 verify: check size test ## Run syntax, size budget, and tests
 
+site: ## Stage the three game files into site/ for static hosting
+	mkdir -p $(SITE_DIR)
+	cp $(GAME_FILES) $(SITE_DIR)/
+
 clean: ## Remove local artifacts
-	rm -rf tests/.chrome-user-data *.log *.tmp
+	rm -rf $(SITE_DIR) tests/.chrome-user-data *.log *.tmp
